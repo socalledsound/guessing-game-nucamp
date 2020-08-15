@@ -3,81 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        h1 {
-            text-transform: uppercase;
-        }
-    </style>
-    <title>workshop assignment week 3</title>
+    <title>new guessing game</title>
 </head>
 <body>
-    <h1>my guessing game</h1>
-    <button onclick="runGame()">enter guess</button>
+    
+
+    <h1>my little game</h1>
+    <button onClick="runGame()">click me to start</button>
 
 
-    <script>
-        const COLORS_ARRAY = ["blue", "orange", "red", "magenta"];
-        const DISPLAY_ARRAY  = [...COLORS_ARRAY].join(', ');     
-        console.log(DISPLAY_ARRAY);
-        console.log(COLORS_ARRAY);
-        let numGuesses = 0;
-        
-        function runGame(){
-            
-            const ANSWER_INDEX = Math.floor(Math.random() * COLORS_ARRAY.length);
-            const TARGET = COLORS_ARRAY[ANSWER_INDEX];
-            let guess = '';
-            let correct = false;
-            let alreadyTried = false;
+
+<script>
+    //this is an array of colors
+    const COLORS_ARRAY = ['blue', 'cyan', 'gold', 'gray', 'green', 'magenta', 'orange', 'red', 'white', 'yellow'];
+    //here we are calling the .join method on our array of colors and add a comma and space between them.
+    const DISPLAY_ARRAY  = [...COLORS_ARRAY].join(', '); 
+    let numGuesses = 0;
+
+
+    function runGame(){
+        //get a random integer between zero and the length of our array - 1.  (do you know why - 1?)
+        let targetIndex = Math.floor(Math.random()* COLORS_ARRAY.length);
+        //get a color from the colors array
+        const target = COLORS_ARRAY[targetIndex];
+        //initialize guess as an empty string
+        let guess = '';
+        //initialize correct to falsy value
+        let correct = false;
+        console.log(target);
+        //initiaize a value which tells us if this is the first time the user is guessing
+        let alreadyTried = false;
+        const previousGuesses = [];
            
-            let i = 0;
-             do{
-                 if(alreadyTried){
-                    guess = prompt('You guessed '+numGuesses + 'times.\n\n Guess Again!\n\n Remember, I am thinking of one of these colors:\n\n' + COLORS_ARRAY +
-                                '\n\nWhat color am I thinking of?\n');
-                 }else {
-                    guess = prompt('I am thinking of one of these colors:\n\n' + DISPLAY_ARRAY +
-                                '\n\nWhat color am I thinking of?\n');
-                                alreadyTried = true;
-                 }   
-                if(guess === null){
-                    return
-                }
-                correct = checkGuess(guess, TARGET);
-                console.log("correct value:" + correct);
-             } while(!correct) 
-             document.body.style.backgroundColor = guess;
-             console.log(document);
-             alert('you are soooooo good.');
-        }
+            //set number of tries value
+           
 
-        function checkGuess(guess, TARGET){
+           //do while loop
+            do{
+                //is this the first time the user has guessed?  if so, tell them how many times
+                if(alreadyTried){
+                    //take in guess value from a prompt, include number of guesses
+                   guess = prompt('You guessed '+ numGuesses + 'times.\n\n Guess Again!\n\n Remember, I am thinking of one of these colors:\n\n' + COLORS_ARRAY +
+                               '\n\nWhat color am I thinking of?\n');
+                    previousGuesses.push(guess);           
+                }else {
+                    //take in guess value from a prompt, include starting message
+                   guess = prompt('I am thinking of one of these colors:\n\n' + DISPLAY_ARRAY +
+                               '\n\nWhat color am I thinking of?\n');
+                               //set this value so we know the next guess isn't the first one
+                               alreadyTried = true;
+                }   
+
+                //if no guess then exit loop
+               if(guess === null){
+                   //message to user
+                   alert("i'm sorry, you didn't win.  to try again click the start button")
+                   //breakt the do loop by returning 
+                   return
+               }
+
+               // this is our previously falsy value.  we update it by calling checkGuess and
+               //passing in the current guess and the correct answer ie target
+               correct = checkGuess(guess, target);
+               //let's put a console.log in here just to be safe
+               console.log("correct value:" + correct);
+            
+            } while(!correct) 
+
+            //we can set the background color of the body to the correct color after they win
+            document.body.style.backgroundColor = guess;
+            console.log(document);
+            //and output a congratulatory message
+            alert('you are soooooo good.');
+
+
+    }
+
+
+    function checkGuess(guess, target){
+            
+            //initialize falsy correct variabl
             let correct = false;
-            console.log(guess, TARGET);
+            console.log(guess, target);
+            //check to see if guess exists in array
             if(COLORS_ARRAY.indexOf(guess) == -1) {
-                console.log("not in array");
+                //message to user
+               prompt('sorry, the value you picked is not in the array');
                
-            } else if(guess > TARGET) {
+            } else if(guess > target) {
+                //message to user
+                prompt('sorry, the value you picked is too high');
                 console.log('aim lower');
                 
-            } else if(guess < TARGET) {
+            } else if(guess < target) {
+                //message to user
+                prompt('sorry, the value you picked is too low');
                 console.log('aim hifgher');
               
             } else {
                 console.log("you got it");
+                prompt('congratulations, you got it!');
                 correct = true
             }
 
+            //increment our numguesses global variable
             numGuesses++;
             return correct
         }
 
 
-  
-
-
-    </script>
-
+</script>
 
 
 </body>
