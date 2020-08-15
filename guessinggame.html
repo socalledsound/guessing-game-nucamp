@@ -33,17 +33,21 @@
         console.log(target);
         //initiaize a value which tells us if this is the first time the user is guessing
         let alreadyTried = false;
+        //let's add an array to keep track of the colors that we guessed
         const previousGuesses = [];
+        
            
             //set number of tries value
            
 
            //do while loop
             do{
+                //use the same trick as before to add a space and comma between each color value
+                const previousGuessesDisplay = [...previousGuesses].join(', '); 
                 //is this the first time the user has guessed?  if so, tell them how many times
                 if(alreadyTried){
                     //take in guess value from a prompt, include number of guesses
-                   guess = prompt('You guessed '+ numGuesses + 'times.\n\n Guess Again!\n\n Remember, I am thinking of one of these colors:\n\n' + COLORS_ARRAY +
+                   guess = prompt('You guessed '+ numGuesses + 'times.\n\n You already guessed these colors: ' + previousGuessesDisplay + '\n\n Guess Again!\n\n Remember, I am thinking of one of these colors:\n\n' + DISPLAY_ARRAY +
                                '\n\nWhat color am I thinking of?\n');
                     previousGuesses.push(guess);           
                 }else {
@@ -52,6 +56,7 @@
                                '\n\nWhat color am I thinking of?\n');
                                //set this value so we know the next guess isn't the first one
                                alreadyTried = true;
+                               previousGuesses.push(guess);  
                 }   
 
                 //if no guess then exit loop
@@ -82,27 +87,28 @@
 
     function checkGuess(guess, target){
             
-            //initialize falsy correct variabl
+            //initialize falsy correct variable
             let correct = false;
             console.log(guess, target);
             //check to see if guess exists in array
             if(COLORS_ARRAY.indexOf(guess) == -1) {
                 //message to user
-               prompt('sorry, the value you picked is not in the array');
+                console.log("not in array");
+                alert('sorry, the value you picked is not in the array');
                
             } else if(guess > target) {
                 //message to user
-                prompt('sorry, the value you picked is too high');
+                alert('sorry, the value you picked is too high');
                 console.log('aim lower');
                 
             } else if(guess < target) {
                 //message to user
-                prompt('sorry, the value you picked is too low');
+                alert('sorry, the value you picked is too low');
                 console.log('aim hifgher');
               
             } else {
                 console.log("you got it");
-                prompt('congratulations, you got it!');
+                alert('congratulations, you got it!');
                 correct = true
             }
 
