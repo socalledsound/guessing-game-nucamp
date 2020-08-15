@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1 {
+            text-transform: uppercase;
+        }
+    </style>
+    <title>workshop assignment week 3</title>
+</head>
+<body>
+    <h1>my guessing game</h1>
+    <button onclick="runGame()">enter guess</button>
+
+
+    <script>
+        const COLORS_ARRAY = ["blue", "orange", "red", "magenta"];
+        const DISPLAY_ARRAY  = [...COLORS_ARRAY].join(', ');     
+        console.log(DISPLAY_ARRAY);
+        console.log(COLORS_ARRAY);
+        let numGuesses = 0;
+        
+        function runGame(){
+            
+            const ANSWER_INDEX = Math.floor(Math.random() * COLORS_ARRAY.length);
+            const TARGET = COLORS_ARRAY[ANSWER_INDEX];
+            let guess = '';
+            let correct = false;
+            let alreadyTried = false;
+           
+            let i = 0;
+             do{
+                 if(alreadyTried){
+                    guess = prompt('You guessed '+numGuesses + 'times.\n\n Guess Again!\n\n Remember, I am thinking of one of these colors:\n\n' + COLORS_ARRAY +
+                                '\n\nWhat color am I thinking of?\n');
+                 }else {
+                    guess = prompt('I am thinking of one of these colors:\n\n' + DISPLAY_ARRAY +
+                                '\n\nWhat color am I thinking of?\n');
+                                alreadyTried = true;
+                 }   
+                if(guess === null){
+                    return
+                }
+                correct = checkGuess(guess, TARGET);
+                console.log("correct value:" + correct);
+             } while(!correct) 
+             document.body.style.backgroundColor = guess;
+             console.log(document);
+             alert('you are soooooo good.');
+        }
+
+        function checkGuess(guess, TARGET){
+            let correct = false;
+            console.log(guess, TARGET);
+            if(COLORS_ARRAY.indexOf(guess) == -1) {
+                console.log("not in array");
+               
+            } else if(guess > TARGET) {
+                console.log('aim lower');
+                
+            } else if(guess < TARGET) {
+                console.log('aim hifgher');
+              
+            } else {
+                console.log("you got it");
+                correct = true
+            }
+
+            numGuesses++;
+            return correct
+        }
+
+
+  
+
+
+    </script>
+
+
+
+</body>
+</html>
